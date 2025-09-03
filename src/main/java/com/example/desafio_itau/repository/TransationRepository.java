@@ -23,17 +23,19 @@ public class TransationRepository {
         transactions.clear();
     }
 
-    public DoubleSummaryStatistics getStatistics(OffsetDateTime currentTime) {
-        OffsetDateTime oneMinuteAgo = currentTime.minusMinutes(1);
+    public DoubleSummaryStatistics getStatistics(OffsetDateTime minutes60Ago) {
+        OffsetDateTime oneMinuteAgo = minutes60Ago.minusMinutes(1);
 
         var statistics = transactions.stream()
-                .filter(t -> t.getDataHour().isAfter(oneMinuteAgo) && t.getDataHour().isBefore(currentTime) || t.getDataHour().isEqual(currentTime))
+                .filter(t -> t.getDataHour().isAfter(oneMinuteAgo))
                 .mapToDouble(t -> t.getValue().doubleValue())
                 .summaryStatistics();
 
         if (statistics.getCount() == 0) {
             return new DoubleSummaryStatistics(0, 0, 0, 0);
         }
+
+
 
         return statistics;
     }

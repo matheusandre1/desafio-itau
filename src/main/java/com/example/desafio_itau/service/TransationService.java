@@ -34,7 +34,7 @@ public class TransationService {
         transationRepository.deleteAll();
     }
 
-    public DoubleSummaryStatistics getStatistics(OffsetDateTime currentTime) {
-        return transationRepository.getStatistics(currentTime);
+    public DoubleSummaryStatistics getStatistics(OffsetDateTime minutes60Ago) {
+        return transationRepository.getStatistics(minutes60Ago);
     }
 }

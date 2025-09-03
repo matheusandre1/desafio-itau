@@ -3,6 +3,7 @@ package com.example.desafio_itau.controller;
 import com.example.desafio_itau.config.exception.ErrorResponse;
 import com.example.desafio_itau.dto.TransactionDto;
 import com.example.desafio_itau.service.TransationService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,8 @@ public class TransactionController {
 
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Realiza uma nova transação")
     public ResponseEntity<TransactionDto> realizedTransaction(@RequestBody TransactionDto transactionDto)
     {
         var transation = transationService.realizedTransaction(transactionDto);
@@ -28,7 +31,10 @@ public class TransactionController {
         return ResponseEntity.created(null).body(transactionDto);
     }
 
+
     @DeleteMapping
+    @Operation(summary = "Deleta todas as transações")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Void> deleteAll()
     {
         transationService.deleteAll();
